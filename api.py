@@ -1,6 +1,5 @@
 import subprocess
 from flask import Flask, jsonify, request
-
 from traitement import run_traitement
 import os
 
@@ -18,6 +17,17 @@ def refresh_data():
         return jsonify({"status": "success", "message": "Données mises à jour"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/debug')
+def debug_html():
+    try:
+        with open("debug.html", "r", encoding="utf-8") as f:
+            content = f.read()
+        return content
+    except FileNotFoundError:
+        return "Fichier debug.html non trouvé.", 404
+    except Exception as e:
+        return f"Erreur lors de la lecture du fichier : {str(e)}", 500
 
 @app.route('/')
 def home():
