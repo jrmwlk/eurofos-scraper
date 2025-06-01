@@ -6,9 +6,9 @@ def run_traitement(html_file):
         soup = BeautifulSoup(f, "html.parser")
 
     result = {"parc": [], "navire": []}
-
-    # Résumé STR PARC
     resume = {}
+
+    # Traitement PARC / CAVALIER uniquement
     for row in soup.find_all("tr"):
         cells = row.find_all("td")
         if len(cells) < 3:
@@ -19,12 +19,12 @@ def run_traitement(html_file):
             continue
 
         full_row_html = ''.join(str(td) for td in cells)
-        # Condition modifiée pour être insensible à la casse et tolérer les espaces
-        if not re.search(r"parc\s*/\s*cavalier", full_row_html, re.I) or not re.search(r"str", full_row_html, re.I):
+        if "PARC / CAVALIER" not in full_row_html:
             continue
 
         shift_text = cells[1].get_text(strip=True)
         shift = next((code for code in ["S1", "S2", "S3", "JD", "JV"] if code in shift_text), "?")
+
         numbers = re.findall(r"STR\s*</td>\s*<td[^>]*>\s*(\d+)\s*</td>\s*<td[^>]*>\s*(\d+)", full_row_html)
         if numbers:
             n1, n2 = map(int, numbers[0])
@@ -41,7 +41,7 @@ def run_traitement(html_file):
             "total": sum_total
         })
 
-    # Résumé NAVIRE
+    # Traitement NAVIRE complet
     portiques_recherches = ["P08", "P09", "PS0", "PS1", "PS2", "PS3", "PS4", "PS5"]
     for row in soup.find_all("tr"):
         cells = row.find_all("td")
@@ -59,7 +59,7 @@ def run_traitement(html_file):
         for portique in portiques_recherches:
             if portique in text_row:
                 navire_cell = next(
-                    (cell.get_text(strip=True) for cell in cells[2:] if re.match(r"^[A-Z ]{4,}$", cell.get_text(strip=True))),
+                    (cell.get_text(strip=True) for cell in cells[2:] if len(cell.get_text(strip=True)) > 3),
                     "?"
                 )
                 result["navire"].append({
