@@ -1,16 +1,14 @@
-# Eurofos Scraper 🏗️
+# Eurofos Scraper API ⚓️
 
-Un outil Python permettant de :
+Une API en Python pour analyser les données d'embauche portuaire à partir d'un fichier HTML.
 
-- 📥 **Récupérer automatiquement** un fichier HTML (`debug.html`)
-- 📊 **Analyser et générer un rapport** des données d'embauche portuaire :
-  - Résumé **PARC / CAVALIER STR** par shift (S1, S2, S3, JD, JV)
-  - Résumé des **navires par portique**
+## 🚀 Fonctionnalités
 
-## 🔧 Utilisation
+- Résumé PARC / CAVALIER STR (par shift : S1, S2, S3, JD, JV)
+- Résumé des navires présents par portique
 
-1. Place le fichier `debug.html` dans le dossier (ou laisse `main.py` le récupérer automatiquement)
-2. Lance le traitement :
+## 🛠️ Installation locale
 
 ```bash
-python main.py# eurofos-scraper
+pip install -r requirements.txt
+python api.py
