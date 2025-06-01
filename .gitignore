@@ -1,0 +1,5 @@
+debug.html
+traitement_folios.html
+__pycache__/
+*.pyc
+.env
