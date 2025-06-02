@@ -1,5 +1,16 @@
-debug.html
-traitement_folios.html
+# Fichiers de cache
 __pycache__/
-*.pyc
-.env
+*.py[cod]
+
+# Environnement virtuel
+venv/
+
+# Fichiers générés localement
+debug.html
+debug.txt
+
+# Fichiers système macOS
+.DS_Store
+
+# Logs éventuels
+*.log
